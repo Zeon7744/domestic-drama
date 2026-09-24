@@ -1,57 +1,81 @@
-# 国产短剧引擎
+# domestic-drama - Domestic Short Drama Engine
 
-针对抖音/快手生态优化的 AI 短剧创作工具。
+Short drama engine optimized for Douyin and Kuaishou platforms.
 
-## 特性
+## Features
 
-- 🎬 竖屏 9:16 格式适配
-- 🗣️ 方言语音合成支持
-- ✅ 平台审核规则检查
-- 🔥 热门题材推荐库
-- ⚡ 批量生成流水线
+- **Platform-Specific Rules**: Duration limits, content categories, sensitive word checks
+- **Project Management**: Characters, episodes, scripts, status tracking
+- **Content Review**: Automated content compliance checking
+- **Vertical Format**: 9:16 aspect ratio support
+- **Episode Pipeline**: Draft → Review → Published workflow
 
-## 热门题材
-
-| 类别 | 热门关键词 |
-|------|-----------|
-| 都市 | 霸总、逆袭、复仇、闪婚、职场、豪门 |
-| 古装 | 穿越、宫斗、权谋、神医、修仙 |
-| 悬疑 | 推理、侦探、刑侦、密室 |
-| 甜宠 | 暗恋、破镜重圆、先婚后爱 |
-
-## 使用
+## Quick Start
 
 ```bash
-python drama_engine.py "霸总"
-python drama_engine.py "穿越" --platform kuaishou
+python drama_engine.py
 ```
 
-## 输出
+## Usage
 
-```json
-{
-  "title": "霸总反转短剧",
-  "platform": "douyin",
-  "aspect_ratio": "9:16",
-  "episodes": [
-    {
-      "episode": 1,
-      "hook": "第1集开场：一个意想不到的转折",
-      "conflict": "职场危机",
-      "duration_target": "60-90秒"
-    }
-  ]
-}
+```python
+from drama_engine import DramaEngine, DramaGenre, DramaPlatform, DramaProject
+
+# Create engine for Douyin
+engine = DramaEngine(DramaPlatform.DOUYIN)
+
+# Create a drama project
+project = engine.create_project(
+    title='重生之都市修仙',
+    genre=DramaGenre.FANTASY,
+    total_episodes=10,
+    description='现代都市修仙短剧'
+)
+
+# Add characters
+project.add_character('李逍遥', 'protagonist', '重生回都市的修仙者', 25)
+
+# Create episodes
+ep1 = engine.create_episode(
+    project_id='abc12345',  # actual project ID
+    ep_num=1,
+    title='重生归来',
+    script='李逍遥从2099年重生回2026年...',
+    duration=120
+)
+
+# Check content compliance
+result = engine.check_content(ep1.script)
+print(f"Compliance: {result['passed']}")
+
+# Submit for review
+engine.submit_for_review('abc12345')
+
+# Publish
+engine.publish('abc12345')
+
+# Get report
+report = engine.report()
+print(report)
 ```
 
-## 平台规范
+## Platform Rules
 
-### 抖音
-- 单镜头最长 30 秒
-- 前 3 秒必须有冲突或悬念
-- 禁用词：赌博、暴力、低俗、政治敏感
+| Rule | Douyin | Kuaishou |
+|------|--------|----------|
+| Min duration | 15s | 15s |
+| Max duration | 300s | 180s |
+| Max episodes | 100 | 50 |
+| Aspect ratio | 9:16 | 9:16 |
+| Content categories | Romance, Comedy, Family, Workplace | Romance, Comedy, Family, Revenge |
 
-### 快手
-- 单镜头最长 45 秒
-- 前 5 秒需要强刺激
-- 禁用词：封建迷信、赌博、色情暗示
+## Notes
+
+- This is a content management engine, not a video generation tool
+- For actual video production, integrate with ComfyUI / Wan2.1 / Kling
+- Content review is rule-based; production use requires human review
+- Sensitive word list is a starting point - customize per platform policies
+
+## License
+
+MIT

@@ -1,199 +1,287 @@
-#!/usr/bin/env python3
 """
-AI 短剧国产化引擎 - 抖音/快手生态适配
-
-针对国内短视频平台特性优化：
-  - 竖屏 9:16 格式输出
-  - 方言语音合成支持
-  - 平台审核规则检查
-  - 热门题材推荐
-  - 批量生成流水线
+domestic-drama: Domestic Short Drama Engine for Douyin/Kuaishou
 """
-
 import json
-import os
-from pathlib import Path
-from datetime import datetime
-from typing import List, Dict, Optional
+import time
+import uuid
+from dataclasses import dataclass, field
+from typing import Dict, List, Optional
+from enum import Enum
 
-# 热门题材库（基于抖音/快手短剧趋势）
-HOT_TOPICS = {
-    "都市": ["霸总", "逆袭", "复仇", "闪婚", "职场", "豪门"],
-    "古装": ["穿越", "宫斗", "权谋", "神医", "修仙"],
-    "悬疑": ["推理", "侦探", "刑侦", "密室"],
-    "甜宠": ["暗恋", "破镜重圆", "先婚后爱"],
-    "家庭": ["婆媳", "育儿", "养老"],
-}
+class DramaPlatform(Enum):
+    DOUYIN = 'douyin'
+    KUAISHOU = 'kuaishou'
 
-# 平台审核规则
-PLATFORM_RULES = {
-    "douyin": {
-        "max_duration_per_scene": 30,  # 单镜头最长30秒
-        "forbidden_keywords": ["赌博", "暴力", "低俗", "政治敏感"],
-        "preferred_aspect": "9:16",
-        "optimal_episode_duration": "60-90秒",
-        "hook_requirement": "前3秒必须有冲突或悬念"
-    },
-    "kuaishou": {
-        "max_duration_per_scene": 45,
-        "forbidden_keywords": ["封建迷信", "赌博", "色情暗示"],
-        "preferred_aspect": "9:16",
-        "optimal_episode_duration": "90-120秒",
-        "hook_requirement": "前5秒需要强刺激"
+class DramaGenre(Enum):
+    ROMANCE = 'romance'
+    REVENGE = 'revenge'
+    FAMILY = 'family'
+    WORKPLACE = 'workplace'
+    FANTASY = 'fantasy'
+    CRIME = 'crime'
+
+class EpisodeStatus(Enum):
+    DRAFT = 'draft'
+    PRODUCING = 'producing'
+    REVIEW = 'review'
+    PUBLISHED = 'published'
+    REMOVED = 'removed'
+
+@dataclass
+class Character:
+    """Character in a drama."""
+    name: str
+    role: str  # 'protagonist', 'antagonist', 'supporting'
+    description: str
+    age: int = 0
+    
+    def to_dict(self):
+        return self.__dict__
+
+@dataclass
+class Episode:
+    """Single episode."""
+    episode_number: int
+    title: str
+    script: str
+    duration_sec: int  # 60-300 sec typical
+    status: EpisodeStatus = EpisodeStatus.DRAFT
+    published_at: Optional[float] = None
+    platform: Optional[DramaPlatform] = None
+    
+    def to_dict(self):
+        return {
+            'episode_number': self.episode_number,
+            'title': self.title,
+            'script': self.script,
+            'duration_sec': self.duration_sec,
+            'status': self.status.value,
+            'published_at': self.published_at,
+            'platform': self.platform.value if self.platform else None
+        }
+
+@dataclass
+class DramaProject:
+    """Complete drama project."""
+    title: str
+    genre: DramaGenre
+    platform: DramaPlatform
+    total_episodes: int
+    description: str
+    characters: List[Character] = field(default_factory=list)
+    episodes: List[Episode] = field(default_factory=list)
+    status: str = 'draft'
+    target_audience: str = '18-35'
+    
+    def add_character(self, name: str, role: str, description: str, age: int = 0):
+        self.characters.append(Character(name, role, description, age))
+    
+    def add_episode(self, ep_num: int, title: str, script: str, duration: int = 90):
+        ep = Episode(ep_num, title, script, duration)
+        self.episodes.append(ep)
+        return ep
+    
+    def to_dict(self):
+        return {
+            'title': self.title,
+            'genre': self.genre.value,
+            'platform': self.platform.value,
+            'total_episodes': self.total_episodes,
+            'description': self.description,
+            'characters': [c.to_dict() for c in self.characters],
+            'episodes': [e.to_dict() for e in self.episodes],
+            'status': self.status,
+            'target_audience': self.target_audience
+        }
+
+class DramaEngine:
+    """
+    Short drama engine optimized for Chinese platforms.
+    Handles vertical format, platform-specific rules, content review.
+    """
+    
+    # Platform-specific constraints
+    PLATFORM_RULES = {
+        DramaPlatform.DOUYIN: {
+            'max_duration': 300,  # 5 min max
+            'min_duration': 15,    # 15 sec min
+            'aspect_ratio': '9:16',
+            'content_categories': ['romance', 'comedy', 'family', 'workplace'],
+            'sensitive_words': ['gambling', 'illegal'],
+            'max_episodes': 100,
+        },
+        DramaPlatform.KUAISHOU: {
+            'max_duration': 180,
+            'min_duration': 15,
+            'aspect_ratio': '9:16',
+            'content_categories': ['romance', 'comedy', 'family', 'revenge'],
+            'sensitive_words': ['gambling', 'illegal'],
+            'max_episodes': 50,
+        }
     }
-}
-
-class DomesticDramaEngine:
-    """国内短剧生成引擎"""
     
-    def __init__(self, platform: str = "douyin"):
+    def __init__(self, platform: DramaPlatform = DramaPlatform.DOUYIN):
         self.platform = platform
-        self.rules = PLATFORM_RULES.get(platform, PLATFORM_RULES["douyin"])
-        self.output_dir = Path(f"./output/{platform}")
-        self.output_dir.mkdir(parents=True, exist_ok=True)
+        self.rules = self.PLATFORM_RULES[platform]
+        self.projects: Dict[str, DramaProject] = {}
+        self.review_queue: List[str] = []
     
-    def generate_script(self, theme: str, episode_count: int = 10, style: str = "反转爽剧") -> dict:
-        """生成符合平台规范的剧本"""
-        # 根据主题选择题材
-        category = self._select_category(theme)
+    def create_project(self, title: str, genre: DramaGenre, 
+                      total_episodes: int, description: str = '') -> DramaProject:
+        """Create a new drama project."""
+        if genre not in [DramaGenre(g) for g in self.rules['content_categories']]:
+            raise ValueError(f"Genre {genre} not supported on {self.platform}")
         
-        script = {
-            "title": f"{theme}{style}短剧",
-            "platform": self.platform,
-            "category": category,
-            "episode_count": episode_count,
-            "total_duration_estimated": f"{episode_count * 75}秒",
-            "aspect_ratio": self.rules["preferred_aspect"],
-            "format": "竖屏短剧",
-            "episodes": []
+        project_id = str(uuid.uuid4())[:8]
+        project = DramaProject(
+            title=title,
+            genre=genre,
+            platform=self.platform,
+            total_episodes=total_episodes,
+            description=description
+        )
+        self.projects[project_id] = project
+        return project
+    
+    def create_episode(self, project_id: str, ep_num: int, 
+                      title: str, script: str, duration: int = 90) -> Episode:
+        """Create an episode for a project."""
+        project = self.projects.get(project_id)
+        if not project:
+            raise KeyError(f"Project {project_id} not found")
+        
+        # Validate duration
+        if duration < self.rules['min_duration']:
+            duration = self.rules['min_duration']
+        if duration > self.rules['max_duration']:
+            duration = self.rules['max_duration']
+        
+        ep = project.add_episode(ep_num, title, script, duration)
+        return ep
+    
+    def check_content(self, text: str) -> Dict:
+        """
+        Check content against platform rules.
+        Returns review result.
+        """
+        issues = []
+        text_lower = text.lower()
+        
+        for word in self.rules['sensitive_words']:
+            if word in text_lower:
+                issues.append(f"Sensitive word detected: {word}")
+        
+        # Check duration
+        if len(text) > 5000:
+            issues.append("Script too long for platform limits")
+        
+        return {
+            'passed': len(issues) == 0,
+            'issues': issues,
+            'platform': self.platform.value
         }
+    
+    def submit_for_review(self, project_id: str, episode_number: int = None):
+        """Submit project or episode for content review."""
+        project = self.projects.get(project_id)
+        if not project:
+            return False
         
-        # 生成每一集大纲
-        for i in range(1, episode_count + 1):
-            episode = {
-                "episode": i,
-                "duration_target": "60-90秒",
-                "hook": self._generate_hook(i, episode_count),
-                "conflict": self._generate_conflict(category, i),
-                "resolution": self._generate_resolution(category, i),
-                "cliffhanger": self._generate_cliffhanger(i, episode_count) if i < episode_count else None,
-                "platform_compliant": True,
-                "review_notes": []
-            }
-            script["episodes"].append(episode)
-        
-        return script
-    
-    def _select_category(self, theme: str) -> str:
-        """根据主题选择最合适的情感类别"""
-        for cat, keywords in HOT_TOPICS.items():
-            if any(k in theme for k in keywords):
-                return cat
-        return "都市"
-    
-    def _generate_hook(self, episode: int, total: int) -> str:
-        """生成前3秒钩子（强制要求）"""
-        hooks = [
-            "一个意想不到的转折",
-            "一场激烈的冲突",
-            "一个神秘的人物出现",
-            "一句震撼的台词",
-            "一个关键的发现"
-        ]
-        return f"第{episode}集开场：{hooks[(episode-1) % len(hooks)]}"
-    
-    def _generate_conflict(self, category: str, episode: int) -> str:
-        """生成核心冲突"""
-        conflicts = {
-            "都市": ["职场危机", "感情纠葛", "商业竞争", "家族秘密"],
-            "古装": ["权力争夺", "身份谜团", "爱情三角", "阴谋算计"],
-            "悬疑": ["消失的证据", "可疑的证人", "隐藏的动机"],
-            "甜宠": ["误会加深", "第三者介入", "家庭反对"],
-            "家庭": ["代际冲突", "经济压力", "健康危机"]
-        }
-        options = conflicts.get(category, conflicts["都市"])
-        return options[(episode-1) % len(options)]
-    
-    def _generate_resolution(self, category: str, episode: int) -> str:
-        """生成解决方案"""
-        resolutions = ["真相大白", "情感爆发", "意外救援", "自我成长", "和解"]
-        return resolutions[(episode-1) % len(resolutions)]
-    
-    def _generate_cliffhanger(self, episode: int, total: int) -> str:
-        """生成悬念结尾"""
-        percent = episode / total
-        if percent < 0.3:
-            return " introduce a new character"
-        elif percent < 0.7:
-            return " reveal a shocking secret"
+        if episode_number is None:
+            # Submit entire project
+            all_passed = True
+            for ep in project.episodes:
+                result = self.check_content(ep.script)
+                if not result['passed']:
+                    all_passed = False
+                    self.review_queue.append(f"{project_id}-ep{ep.episode_number}")
+            if all_passed:
+                project.status = 'review'
+            return all_passed
         else:
-            return " lead to a major confrontation"
+            # Submit single episode
+            for ep in project.episodes:
+                if ep.episode_number == episode_number:
+                    result = self.check_content(ep.script)
+                    if result['passed']:
+                        ep.status = EpisodeStatus.REVIEW
+                    else:
+                        self.review_queue.append(f"{project_id}-ep{ep.episode_number}")
+                    return result['passed']
+        return False
     
-    def check_compliance(self, content: str) -> dict:
-        """检查内容是否符合平台审核规则"""
-        violations = []
+    def publish(self, project_id: str, platform: Optional[DramaPlatform] = None) -> bool:
+        """Publish all reviewed episodes."""
+        project = self.projects.get(project_id)
+        if not project:
+            return False
         
-        # 检查禁用词汇
-        for keyword in self.rules["forbidden_keywords"]:
-            if keyword in content:
-                violations.append({
-                    "type": "forbidden_keyword",
-                    "keyword": keyword,
-                    "suggestion": f"删除或替换'{keyword}'相关内容"
-                })
+        target = platform or project.platform
+        published = 0
+        for ep in project.episodes:
+            if ep.status == EpisodeStatus.REVIEW:
+                ep.status = EpisodeStatus.PUBLISHED
+                ep.published_at = time.time()
+                ep.platform = target
+                published += 1
         
-        # 检查时长建议
-        estimated_duration = len(content) * 2  # 粗略估算
-        if estimated_duration > self.rules["max_duration_per_scene"] * 10:
-            violations.append({
-                "type": "duration_warning",
-                "message": f"预计时长过长，建议精简至{self.rules['optimal_episode_duration']}"
-            })
-        
-        return {
-            "platform": self.platform,
-            "compliant": len(violations) == 0,
-            "violations": violations,
-            "suggestions": [v["suggestion"] for v in violations]
-        }
+        if published == len(project.episodes) and project.episodes:
+            project.status = 'published'
+        return published > 0
     
-    def get_production_guide(self) -> dict:
-        """生成制作指南"""
-        return {
-            "platform": self.platform,
-            "aspect_ratio": self.rules["preferred_aspect"],
-            "episode_duration": self.rules["optimal_episode_duration"],
-            "hook_requirement": self.rules["hook_requirement"],
-            "forbidden_content": self.rules["forbidden_keywords"],
-            "tips": [
-                "每集结尾设置悬念，提高追剧率",
-                "前3秒必须抓住观众注意力",
-                "控制单集时长在1分钟内",
-                "避免敏感话题和违规内容",
-                "多用反转和冲突推进剧情"
-            ]
-        }
-    
-    def save_script(self, script: dict, filename: Optional[str] = None) -> str:
-        """保存剧本到文件"""
-        if filename is None:
-            filename = f"{script['title']}_{datetime.now().strftime('%Y%m%d')}.json"
-        filepath = self.output_dir / filename
-        with open(filepath, 'w', encoding='utf-8') as f:
-            json.dump(script, f, ensure_ascii=False, indent=2)
-        return str(filepath)
+    def report(self, project_id: str = None) -> dict:
+        """Generate project or platform report."""
+        if project_id:
+            project = self.projects.get(project_id)
+            if not project:
+                return {'error': 'Project not found'}
+            return {
+                'project': project.to_dict(),
+                'pending_review': [
+                    q for q in self.review_queue if q.startswith(project_id)
+                ]
+            }
+        
+        # Platform-level report
+        stats = {'total_projects': len(self.projects), 'by_status': {}}
+        for p in self.projects.values():
+            stats['by_status'][p.status] = stats['by_status'].get(p.status, 0) + 1
+        stats['pending_review'] = len(self.review_queue)
+        stats['platform'] = self.platform.value
+        return stats
 
-
-if __name__ == "__main__":
-    import sys
-    engine = DomesticDramaEngine("douyin")
+# Demo
+if __name__ == '__main__':
+    engine = DramaEngine(DramaPlatform.DOUYIN)
     
-    if len(sys.argv) > 1:
-        theme = sys.argv[1]
-    else:
-        theme = "霸总"
+    print("=== Domestic Drama Engine Demo ===\n")
     
-    script = engine.generate_script(theme, episode_count=10)
-    filepath = engine.save_script(script)
-    print(json.dumps(script, indent=2, ensure_ascii=False))
-    print(f"\n剧本已保存至: {filepath}")
+    # Create a project
+    project = engine.create_project(
+        title='重生之都市修仙',
+        genre=DramaGenre.FANTASY,
+        total_episodes=10,
+        description='现代都市修仙短剧'
+    )
+    print(f"Created project: {project.title}")
+    
+    # Add characters
+    project.add_character('李逍遥', 'protagonist', '重生回都市的修仙者', 25)
+    project.add_character('苏瑶', 'supporting', '女主角，医生', 23)
+    
+    # Create episodes
+    ep1 = engine.create_episode(
+        project.title,  # Using title as proxy for project_id
+        1, '重生归来',
+        '李逍遥从2099年重生回2026年，发现自己回到了大学时代...',
+        120
+    )
+    print(f"Episode 1: {ep1.title} ({ep1.duration_sec}s)")
+    
+    # Check content
+    result = engine.check_content(ep1.script)
+    print(f"Content check: {result}")
+    
+    # Report
+    report = engine.report()
+    print(f"\nPlatform report: {json.dumps(report, ensure_ascii=False, indent=2)}")
