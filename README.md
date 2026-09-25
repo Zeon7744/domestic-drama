@@ -1,81 +1,75 @@
-# domestic-drama - Domestic Short Drama Engine
+# 🎬 Domestic Drama — 国产短剧资源库
 
-Short drama engine optimized for Douyin and Kuaishou platforms.
+> **国产精品短剧精选集** — 都市·玄幻·古装题材  
+> 适合AI短剧创作参考与改编素材
 
-## Features
+[![GitHub Stars](https://img.shields.io/github/stars/Zeon7744/domestic-drama?style=social)](https://github.com/Zeon7744/domestic-drama)
+[![GitHub Forks](https://img.shields.io/github/forks/Zeon7744/domestic-drama?style=social)](https://github.com/Zeon7744/domestic-drama/forks)
+[![GitHub License](https://img.shields.io/github/license/Zeon7744/domestic-drama)](https://github.com/Zeon7744/domestic-drama/blob/main/LICENSE)
+[![Gitee Stars](https://gitee.com/Zeon7744/domestic-drama/badge/star.svg?theme=gvp)](https://gitee.com/Zeon7744/domestic-drama)
+[![红果Ready](https://img.shields.io/badge/红果-ready-success.svg)](https://www.shortdramas.com)
 
-- **Platform-Specific Rules**: Duration limits, content categories, sensitive word checks
-- **Project Management**: Characters, episodes, scripts, status tracking
-- **Content Review**: Automated content compliance checking
-- **Vertical Format**: 9:16 aspect ratio support
-- **Episode Pipeline**: Draft → Review → Published workflow
+---
 
-## Quick Start
+## 📌 这是 GitHub 官方主仓
 
-```bash
-python drama_engine.py
+> **Gitee 镜像**: [gitee.com/Zeon7744/domestic-drama](https://gitee.com/Zeon7744/domestic-drama)
+
+Issues 和 PR 请在 GitHub 提交。
+
+---
+
+## 📊 内容概览
+
+| 类别 | 数量 | 说明 |
+|------|------|------|
+| 🎭 短剧剧本 | 待补充 | 符合红果平台规范 |
+| 📖 参考案例 | 待补充 | 爆款短剧分析 |
+| 🛠️ 创作工具 | 待补充 | 格式校验、数据分析 |
+
+---
+
+## 🎬 短剧类型
+
+- **都市异能** — 战神、赘婿、神医
+- **玄幻重生** — 穿越、重生、逆袭
+- **古装权谋** — 宫斗、穿越、权臣
+- **甜宠恋爱** — 豪门、契约、暗恋
+
+---
+
+## 📁 项目结构
+
+```
+domestic-drama/
+├── scripts/             # 短剧剧本
+├── stories/             # 参考故事
+├── tools/               # 创作工具
+├── docs/                # 方法论文档
+└── README.md           # 项目文档
 ```
 
-## Usage
+---
 
-```python
-from drama_engine import DramaEngine, DramaGenre, DramaPlatform, DramaProject
+## ⚠️ 注意事项
 
-# Create engine for Douyin
-engine = DramaEngine(DramaPlatform.DOUYIN)
+- 本库仅供学习研究使用
+- 剧本改编需遵守平台规范
 
-# Create a drama project
-project = engine.create_project(
-    title='重生之都市修仙',
-    genre=DramaGenre.FANTASY,
-    total_episodes=10,
-    description='现代都市修仙短剧'
-)
+---
 
-# Add characters
-project.add_character('李逍遥', 'protagonist', '重生回都市的修仙者', 25)
+## 🤝 贡献指南
 
-# Create episodes
-ep1 = engine.create_episode(
-    project_id='abc12345',  # actual project ID
-    ep_num=1,
-    title='重生归来',
-    script='李逍遥从2099年重生回2026年...',
-    duration=120
-)
+欢迎提交 Issue 和 Pull Request！
 
-# Check content compliance
-result = engine.check_content(ep1.script)
-print(f"Compliance: {result['passed']}")
+---
 
-# Submit for review
-engine.submit_for_review('abc12345')
+## 📄 许可证
 
-# Publish
-engine.publish('abc12345')
+MIT License
 
-# Get report
-report = engine.report()
-print(report)
-```
+---
 
-## Platform Rules
-
-| Rule | Douyin | Kuaishou |
-|------|--------|----------|
-| Min duration | 15s | 15s |
-| Max duration | 300s | 180s |
-| Max episodes | 100 | 50 |
-| Aspect ratio | 9:16 | 9:16 |
-| Content categories | Romance, Comedy, Family, Workplace | Romance, Comedy, Family, Revenge |
-
-## Notes
-
-- This is a content management engine, not a video generation tool
-- For actual video production, integrate with ComfyUI / Wan2.1 / Kling
-- Content review is rule-based; production use requires human review
-- Sensitive word list is a starting point - customize per platform policies
-
-## License
-
-MIT
+**开发者**: Zeon7744  
+**最后更新**: 2026-09-25  
+**GitHub**: https://github.com/Zeon7744/domestic-drama
