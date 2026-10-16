@@ -1,0 +1,42 @@
+# domestic-drama: 内容素材 → GitHub Pages 静态站发布 pipeline
+name: Publish Static Site
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'content/**'
+      - 'publish/**'
+      - '.github/workflows/publish-static-site.yml'
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build static site from content/
+        run: |
+          python3 - <<'PY'
+          import os, json, glob, html
+          out = "publish"
+          os.makedirs(out, exist_ok=True)
+          scripts = glob.glob("content/scripts/*.md")
+          htmls = []
+          for s in scripts:
+              txt = open(s, encoding="utf-8").read()
+              fn = "site_" + os.path.basename(s).replace(".md","") + ".html"
+              open(os.path.join(out, fn), "w", encoding="utf-8").write(
+                  "<html><body><pre>%s</pre></body></html>" % html.escape(txt))
+              htmls.append("<li><a href='%s'>%s</a></li>" % (fn, fn))
+          open(os.path.join(out,"index.html"),"w",encoding="utf-8").write(
+              "<html><body><h1>domestic-drama 内容站</h1><ul>%s</ul></body></html>" % "\n".join(htmls))
+          PY
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: publish
+  deploy:
+    needs: build
+    permissions: {pages: write, contents: write}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/deploy-pages@v4
