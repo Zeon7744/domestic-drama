@@ -122,7 +122,11 @@ class DramaEngine:
     
     def __init__(self, platform: DramaPlatform = DramaPlatform.DOUYIN):
         self.platform = platform
-        self.rules = self.PLATFORM_RULES[platform]
+        # 修复：原 self.rules = self.PLATFORM_RULES[platform] 在 platform 不在
+        # PLATFORM_RULES（或实例绕过 __init__ 构造）时抛 KeyError，导致
+        # check_content / create_episode / 时长校验运行时崩溃。
+        # 现用 .get + DOUYIN 兜底，未命中平台规则时降级为默认平台。
+        self.rules = self.PLATFORM_RULES.get(platform, self.PLATFORM_RULES[DramaPlatform.DOUYIN])
         self.projects: Dict[str, DramaProject] = {}
         self.review_queue: List[str] = []
     
