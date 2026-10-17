@@ -19,6 +19,7 @@ class DramaGenre(Enum):
     WORKPLACE = 'workplace'
     FANTASY = 'fantasy'
     CRIME = 'crime'
+    COMEDY = 'comedy'  # 完善：对齐 PLATFORM_RULES.content_categories（抖音/快手 comedy）
 
 class EpisodeStatus(Enum):
     DRAFT = 'draft'
@@ -106,7 +107,9 @@ class DramaEngine:
             'max_duration': 300,  # 5 min max
             'min_duration': 15,    # 15 sec min
             'aspect_ratio': '9:16',
-            'content_categories': ['romance', 'comedy', 'family', 'workplace'],
+            # 完善：对齐国产短剧行业主流品类（复仇/穿越/霸总/悬疑/家庭/职场/喜剧）
+            'content_categories': ['romance', 'comedy', 'family', 'workplace',
+                                   'revenge', 'fantasy', 'crime'],
             'sensitive_words': ['gambling', 'illegal'],
             'max_episodes': 100,
         },
@@ -114,7 +117,7 @@ class DramaEngine:
             'max_duration': 180,
             'min_duration': 15,
             'aspect_ratio': '9:16',
-            'content_categories': ['romance', 'comedy', 'family', 'revenge'],
+            'content_categories': ['romance', 'comedy', 'family', 'revenge', 'fantasy'],
             'sensitive_words': ['gambling', 'illegal'],
             'max_episodes': 50,
         }
@@ -133,7 +136,11 @@ class DramaEngine:
     def create_project(self, title: str, genre: DramaGenre, 
                       total_episodes: int, description: str = '') -> DramaProject:
         """Create a new drama project."""
-        if genre not in [DramaGenre(g) for g in self.rules['content_categories']]:
+        # 完善：仅用已定义且本平台支持的品类做校验，避免 PLATFORM_RULES 里出现
+        # 未在 DramaGenre 枚举的品类字符串时崩溃。
+        _supported = {c for c in self.rules['content_categories']
+                      if c in DramaGenre._value2member_map_}
+        if genre.value not in _supported:
             raise ValueError(f"Genre {genre} not supported on {self.platform}")
         
         project_id = str(uuid.uuid4())[:8]
@@ -274,8 +281,11 @@ if __name__ == '__main__':
     project.add_character('苏瑶', 'supporting', '女主角，医生', 23)
     
     # Create episodes
+    # 完善：create_episode 需要真实 project_id（self.projects 的 uuid key），
+    # 原 demo 误用 project.title 导致 KeyError。这里取 engine.projects 中该 project 的 key。
+    project_id = next(pid for pid, p in engine.projects.items() if p is project)
     ep1 = engine.create_episode(
-        project.title,  # Using title as proxy for project_id
+        project_id,
         1, '重生归来',
         '李逍遥从2099年重生回2026年，发现自己回到了大学时代...',
         120
