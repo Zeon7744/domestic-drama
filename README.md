@@ -73,3 +73,15 @@ MIT License
 **开发者**: Zeon7744  
 **最后更新**: 2026-09-25  
 **GitHub**: https://github.com/Zeon7744/domestic-drama
+
+---
+
+## 🚀 免费 → Pro → 企业（变现入口）
+
+免费=引擎试用；Pro=多平台发布+封面生成；企业=定制题材库
+
+- **免费**：立即 [安装/克隆] 使用，命中配额即可升级。
+- **Pro**：[Gitee Pro 订阅](https://gitee.com/Zeon7744) 解锁高级能力。
+- **企业**：私有部署 / 定制需求 → 见 `pricing.md`，或联系商务（GitHub Issues / Gitee）。
+
+> 详细定价与 SKU 见 [pricing.md](pricing.md) ｜ 支持项目见 [FUNDING.yml](FUNDING.yml)
