@@ -1,97 +1,108 @@
-# 🎬 Domestic Drama — 国产短剧资源库
+﻿# 馃幀 Domestic Drama 鈥?鍥戒骇鐭墽璧勬簮搴?
 
-> **国产精品短剧精选集** — 都市·玄幻·古装题材  
-> 适合AI短剧创作参考与改编素材
+> **鍥戒骇绮惧搧鐭墽绮鹃€夐泦** 鈥?閮藉競路鐜勫够路鍙よ棰樻潗  
+> 閫傚悎AI鐭墽鍒涗綔鍙傝€冧笌鏀圭紪绱犳潗
 
 [![GitHub Stars](https://img.shields.io/github/stars/Zeon7744/domestic-drama?style=social)](https://github.com/Zeon7744/domestic-drama)
 [![GitHub Forks](https://img.shields.io/github/forks/Zeon7744/domestic-drama?style=social)](https://github.com/Zeon7744/domestic-drama/forks)
 [![GitHub License](https://img.shields.io/github/license/Zeon7744/domestic-drama)](https://github.com/Zeon7744/domestic-drama/blob/main/LICENSE)
 [![Gitee Stars](https://gitee.com/Zeon7744/domestic-drama/badge/star.svg?theme=gvp)](https://gitee.com/Zeon7744/domestic-drama)
-[![红果Ready](https://img.shields.io/badge/红果-ready-success.svg)](https://www.shortdramas.com)
+[![绾㈡灉Ready](https://img.shields.io/badge/绾㈡灉-ready-success.svg)](https://www.shortdramas.com)
 
 ---
 
-## 📌 这是 GitHub 官方主仓
+## 馃搶 杩欐槸 GitHub 瀹樻柟涓讳粨
 
-> **Gitee 镜像**: [gitee.com/Zeon7744/domestic-drama](https://gitee.com/Zeon7744/domestic-drama)
+> **Gitee 闀滃儚**: [gitee.com/Zeon7744/domestic-drama](https://gitee.com/Zeon7744/domestic-drama)
 
-Issues 和 PR 请在 GitHub 提交。
+Issues 鍜?PR 璇峰湪 GitHub 鎻愪氦銆?
 
 ---
 
-## 📊 内容概览
+## 馃搳 鍐呭姒傝
 
-| 类别 | 数量 | 说明 |
+| 绫诲埆 | 鏁伴噺 | 璇存槑 |
 |------|------|------|
-| 🎭 短剧剧本 | 待补充 | 符合红果平台规范 |
-| 📖 参考案例 | 待补充 | 爆款短剧分析 |
-| 🛠️ 创作工具 | 1 | `drama_workflow.py` 爆欽短剧工作流（选题→脚本→分镜→合规） |
+| 馃幁 鐭墽鍓ф湰 | 寰呰ˉ鍏?| 绗﹀悎绾㈡灉骞冲彴瑙勮寖 |
+| 馃摉 鍙傝€冩渚?| 寰呰ˉ鍏?| 鐖嗘鐭墽鍒嗘瀽 |
+| 馃洜锔?鍒涗綔宸ュ叿 | 1 | `drama_workflow.py` 鐖嗘鐭墽宸ヤ綔娴侊紙閫夐鈫掕剼鏈啋鍒嗛暅鈫掑悎瑙勶級 |
 
 ---
 
-## 🚀 为什么用本工具
+## 馃殌 涓轰粈涔堢敤鏈伐鍏?
 
-> 短剧市场半年 220 亿、增速 138%，但**单部爆欽率仅 0.47%** —— 绝大多数团队输在“选题-钩子-分镜”三个上游环节，而非后期制作。
-> 本工具把爆欽共性提炼成可复用流水线：一句话想法进，选题卡 + 分集脚本 + 竖屏分镜表 + 平台合规结果 出，
-> 全流程零依赖、离线可跑，10 分钟出样片级生产资料，直接把“拍前决策”门槛从“经验”降到“命令”。
+> 鐭墽甯傚満鍗婂勾 220 浜裤€佸閫?138%锛屼絾**鍗曢儴鐖嗘鐜囦粎 0.47%** 鈥斺€?缁濆ぇ澶氭暟鍥㈤槦杈撳湪鈥滈€夐-閽╁瓙-鍒嗛暅鈥濅笁涓笂娓哥幆鑺傦紝鑰岄潪鍚庢湡鍒朵綔銆?
+> 鏈伐鍏锋妸鐖嗘鍏辨€ф彁鐐兼垚鍙鐢ㄦ祦姘寸嚎锛氫竴鍙ヨ瘽鎯虫硶杩涳紝閫夐鍗?+ 鍒嗛泦鑴氭湰 + 绔栧睆鍒嗛暅琛?+ 骞冲彴鍚堣缁撴灉 鍑猴紝
+> 鍏ㄦ祦绋嬮浂渚濊禆銆佺绾垮彲璺戯紝10 鍒嗛挓鍑烘牱鐗囩骇鐢熶骇璧勬枡锛岀洿鎺ユ妸鈥滄媿鍓嶅喅绛栤€濋棬妲涗粠鈥滅粡楠屸€濋檷鍒扳€滃懡浠も€濄€?
 
-### 一行命令
+### 涓€琛屽懡浠?
 
 ```bash
-python drama_workflow.py --topic 重生都市例亚 --episodes 3 --duration 90 --platform douyin
-# → out_XXXXXX/{idea_card.json, script.md, storyboard.json, storyboard.md, compliance.json}
+python drama_workflow.py --topic 閲嶇敓閮藉競渚嬩簹 --episodes 3 --duration 90 --platform douyin
+# 鈫?out_XXXXXX/{idea_card.json, script.md, storyboard.json, storyboard.md, compliance.json}
 ```
 
-| 痛点 | 工具对策 |
+| 鐥涚偣 | 宸ュ叿瀵圭瓥 |
 |---|---|
-| 选题玄学、命中率 0.47% | 内置钩子库 + 平台匹配 + 付费点卡点（第1集末），结构化选题卡 |
-| 脚本/分镜靠人工对表 | 节拍化模板（3-5-2-8-10s 竖屏节奏）+ 自动时长对齐 + Markdown/JSON 双格式 |
-| 平台合规事后被下架 | 复用 `drama_engine.DramaEngine.check_content`，出片前自动扫敏感词/超长 |
-| 工具学习成本高 | 纯标准库，无 pip 安装，Windows/Mac 开箱即用；LLM 可替换升级 |
+| 閫夐鐜勫銆佸懡涓巼 0.47% | 鍐呯疆閽╁瓙搴?+ 骞冲彴鍖归厤 + 浠樿垂鐐瑰崱鐐癸紙绗?闆嗘湯锛夛紝缁撴瀯鍖栭€夐鍗?|
+| 鑴氭湰/鍒嗛暅闈犱汉宸ュ琛?| 鑺傛媿鍖栨ā鏉匡紙3-5-2-8-10s 绔栧睆鑺傚锛? 鑷姩鏃堕暱瀵归綈 + Markdown/JSON 鍙屾牸寮?|
+| 骞冲彴鍚堣浜嬪悗琚笅鏋?| 澶嶇敤 `drama_engine.DramaEngine.check_content`锛屽嚭鐗囧墠鑷姩鎵晱鎰熻瘝/瓒呴暱 |
+| 宸ュ叿瀛︿範鎴愭湰楂?| 绾爣鍑嗗簱锛屾棤 pip 瀹夎锛學indows/Mac 寮€绠卞嵆鐢紱LLM 鍙浛鎹㈠崌绾?|
 
 ---
 
-## 🎬 短剧类型
+## 馃幀 鐭墽绫诲瀷
 
-- **都市异能** — 战神、赘婿、神医
-- **玄幻重生** — 穿越、重生、逆袭
-- **古装权谋** — 宫斗、穿越、权臣
-- **甜宠恋爱** — 豪门、契约、暗恋
+- **閮藉競寮傝兘** 鈥?鎴樼銆佽禈濠裤€佺鍖?
+- **鐜勫够閲嶇敓** 鈥?绌胯秺銆侀噸鐢熴€侀€嗚
+- **鍙よ鏉冭皨** 鈥?瀹枟銆佺┛瓒娿€佹潈鑷?
+- **鐢滃疇鎭嬬埍** 鈥?璞棬銆佸绾︺€佹殫鎭?
 
 ---
 
-## 📁 项目结构
+## 馃搧 椤圭洰缁撴瀯
 
 ```
 domestic-drama/
-├── scripts/             # 短剧剧本
-├── stories/             # 参考故事
-├── tools/               # 创作工具
-├── docs/                # 方法论文档
-└── README.md           # 项目文档
+鈹溾攢鈹€ scripts/             # 鐭墽鍓ф湰
+鈹溾攢鈹€ stories/             # 鍙傝€冩晠浜?
+鈹溾攢鈹€ tools/               # 鍒涗綔宸ュ叿
+鈹溾攢鈹€ docs/                # 鏂规硶璁烘枃妗?
+鈹斺攢鈹€ README.md           # 椤圭洰鏂囨。
 ```
 
 ---
 
-## ⚠️ 注意事项
+## 鈿狅笍 娉ㄦ剰浜嬮」
 
-- 本库仅供学习研究使用
-- 剧本改编需遵守平台规范
-
----
-
-## 🤝 贡献指南
-
-欢迎提交 Issue 和 Pull Request！
+- 鏈簱浠呬緵瀛︿範鐮旂┒浣跨敤
+- 鍓ф湰鏀圭紪闇€閬靛畧骞冲彴瑙勮寖
 
 ---
 
-## 📄 许可证
+## 馃 璐＄尞鎸囧崡
+
+娆㈣繋鎻愪氦 Issue 鍜?Pull Request锛?
+
+---
+
+## 馃搫 璁稿彲璇?
 
 MIT License
 
 ---
 
-**开发者**: Zeon7744  
-**最后更新**: 2026-09-25  
+**寮€鍙戣€?*: Zeon7744  
+**鏈€鍚庢洿鏂?*: 2026-09-25  
 **GitHub**: https://github.com/Zeon7744/domestic-drama
+## 定位与定价（2026-10-22 锁定）
+
+domestic-drama 是个人创作者的 AI 短剧工作流编排工具。行业现实：爆款率仅 0.47%（破亿/总上线）、单部成本 3 万。本工具用"剧本 → 分镜 → 画面 → 配音 → 成片"一站式 Agent 流水线 + 角色一致性引擎，目标把爆款率从 0.47% 提到 2%+。
+
+**定价档位**（对标可灵 Pro 60% 价 + 工作流增值）：
+- 个人版 ¥79/月 · 工作室版 ¥299/月 · 精品模板/提示词包 ¥99-399 按套
+- 免费体验引流 → 订阅；发行分成 30%（帮用户上红果/抖音）
+- 入口：python drama_workflow.py --idea "一句话创意"
+
+> English: one-stop AI short-drama workflow for individual creators. Hit rate is just 0.47% industry-wide; this Agent pipeline + character-consistency engine targets 2%+. Pro from ¥79/mo, cheaper than Kling Pro with workflow orchestration on top.
+
