@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爆款短剧样片展示 - domestic-drama</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: system-ui, -apple-system, sans-serif; background: #0f0f0f; color: #fff; }
+        .hero { background: linear-gradient(135deg, #dc2626, #9333ea); padding: 60px 20px; text-align: center; }
+        .hero h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .hero p { font-size: 1.2em; color: rgba(255,255,255,0.8); }
+        .container { max-width: 1000px; margin: 0 auto; padding: 40px 20px; }
+        .drama-card { background: #1a1a1a; border-radius: 16px; margin-bottom: 30px; overflow: hidden; border: 1px solid #333; }
+        .drama-header { display: flex; gap: 20px; padding: 24px; }
+        .drama-thumb { width: 180px; height: 240px; background: #222; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .drama-thumb svg { width: 100%; height: 100%; }
+        .drama-info { flex: 1; }
+        .drama-info h3 { font-size: 1.4em; margin-bottom: 8px; color: #f87171; }
+        .drama-meta { display: flex; gap: 12px; margin-bottom: 12px; }
+        .drama-meta span { background: #333; padding: 4px 10px; border-radius: 12px; font-size: 0.85em; }
+        .drama-desc { color: #aaa; line-height: 1.6; margin-bottom: 16px; }
+        .cta-btn { display: inline-block; padding: 12px 24px; background: linear-gradient(135deg, #dc2626, #ea580c); color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; text-decoration: none; font-size: 1em; transition: transform 0.2s; }
+        .cta-btn:hover { transform: scale(1.05); }
+        .pricing-banner { background: linear-gradient(135deg, #1e293b, #334155); border-radius: 16px; padding: 40px; text-align: center; margin-top: 40px; }
+        .pricing-banner h2 { margin-bottom: 16px; }
+        .pricing-grid { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 24px; }
+        .price-card { background: #1a1a1a; border: 1px solid #444; border-radius: 12px; padding: 24px; width: 200px; text-align: center; }
+        .price-card.popular { border-color: #f87171; }
+        .price-card h4 { color: #f87171; margin-bottom: 8px; }
+        .price-card .price { font-size: 1.8em; font-weight: 800; }
+        .price-card ul { list-style: none; margin-top: 12px; font-size: 0.9em; color: #aaa; }
+        .price-card li { margin: 6px 0; }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <h1>🎬 爆款短剧样片展示</h1>
+        <p>AI 工作流出品 · 选题→剧本→分镜 一站式生成</p>
+    </div>
+
+    <div class="container">
+        <!-- 样片 1 -->
+        <div class="drama-card">
+            <div class="drama-header">
+                <div class="drama-thumb">
+                    <svg viewBox="0 0 180 240" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="180" height="240" fill="#1a1a2e"/>
+                        <text x="90" y="100" text-anchor="middle" fill="#e94560" font-size="40">⚔️</text>
+                        <text x="90" y="140" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">战神归来</text>
+                        <text x="90" y="165" text-anchor="middle" fill="#aaa" font-size="11">90s × 3集</text>
+                        <rect x="30" y="190" width="120" height="30" rx="15" fill="#e94560"/>
+                        <text x="90" y="210" text-anchor="middle" fill="#fff" font-size="12">竖屏 9:16</text>
+                    </svg>
+                </div>
+                <div class="drama-info">
+                    <h3>《战神归来》</h3>
+                    <div class="drama-meta">
+                        <span>⏱ 90s/集</span>
+                        <span>📺 3集</span>
+                        <span>🔥 都市异能</span>
+                        <span>📱 抖音</span>
+                    </div>
+                    <p class="drama-desc">核心卖点：战神归来发现女儿被软禁，一个电话全城势力跪了。3 秒钩子 + 反转 + 付费卡点第1集末。</p>
+                    <a href="#" class="cta-btn" onclick="alert('调用 drama_workflow.py --topic 战神归来');return false;">🚀 一键生成同款</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 样片 2 -->
+        <div class="drama-card">
+            <div class="drama-header">
+                <div class="drama-thumb">
+                    <svg viewBox="0 0 180 240" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="180" height="240" fill="#0f3460"/>
+                        <text x="90" y="100" text-anchor="middle" fill="#e94560" font-size="40">🔄</text>
+                        <text x="90" y="140" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">重生都市修仙</text>
+                        <text x="90" y="165" text-anchor="middle" fill="#aaa" font-size="11">120s × 5集</text>
+                        <rect x="30" y="190" width="120" height="30" rx="15" fill="#e94560"/>
+                        <text x="90" y="210" text-anchor="middle" fill="#fff" font-size="12">竖屏 9:16</text>
+                    </svg>
+                </div>
+                <div class="drama-info">
+                    <h3>《重生都市修仙》</h3>
+                    <div class="drama-meta">
+                        <span>⏱ 120s/集</span>
+                        <span>📺 5集</span>
+                        <span>🔥 玄幻重生</span>
+                        <span>📱 抖音</span>
+                    </div>
+                    <p class="drama-desc">核心卖点：重生回2026年手握未来10年风口，第一件事找上曾经瞧不起他的公司。逆袭爽感+商战元素。</p>
+                    <a href="#" class="cta-btn" onclick="alert('调用 drama_workflow.py --topic 重生都市修仙');return false;">🚀 一键生成同款</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 样片 3 -->
+        <div class="drama-card">
+            <div class="drama-header">
+                <div class="drama-thumb">
+                    <svg viewBox="0 0 180 240" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="180" height="240" fill="#533483"/>
+                        <text x="90" y="100" text-anchor="middle" fill="#f87171" font-size="40">💕</text>
+                        <text x="90" y="140" text-anchor="middle" fill="#fff" font-size="14" font-weight="bold">豪门契约婚</text>
+                        <text x="90" y="165" text-anchor="middle" fill="#aaa" font-size="11">90s × 3集</text>
+                        <rect x="30" y="190" width="120" height="30" rx="15" fill="#f87171"/>
+                        <text x="90" y="210" text-anchor="middle" fill="#fff" font-size="12">竖屏 9:16</text>
+                    </svg>
+                </div>
+                <div class="drama-info">
+                    <h3>《豪门契约婚》</h3>
+                    <div class="drama-meta">
+                        <span>⏱ 90s/集</span>
+                        <span>📺 3集</span>
+                        <span>🔥 甜宠豪门</span>
+                        <span>📱 快手</span>
+                    </div>
+                    <p class="drama-desc">核心卖点：她以为他讨厌她，直到他把她抱进怀里说"我找了你三年"。契约婚姻→真相揭秘→甜宠反转。</p>
+                    <a href="#" class="cta-btn" onclick="alert('调用 drama_workflow.py --topic 豪门契约婚');return false;">🚀 一键生成同款</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 定价横幅 -->
+        <div class="pricing-banner">
+            <h2>💎 选择你的创作计划</h2>
+            <p style="color:#94a3b8">发行分成 30% — 帮你上红果/抖音</p>
+            <div class="pricing-grid">
+                <div class="price-card">
+                    <h4>Free</h4>
+                    <div class="price">¥0</div>
+                    <ul><li>1 集/天</li><li>基础模板</li><li>社区支持</li></ul>
+                </div>
+                <div class="price-card popular">
+                    <h4>Pro 🔥</h4>
+                    <div class="price">¥79<span style="font-size:0.5em">/月</span></div>
+                    <ul><li>5 集/天</li><li>全部模板</li><li>优先支持</li></ul>
+                </div>
+                <div class="price-card">
+                    <h4>Studio</h4>
+                    <div class="price">¥299<span style="font-size:0.5em">/月</span></div>
+                    <ul><li>不限集数</li><li>角色一致性引擎</li><li>发行分成 30%</li></ul>
+                </div>
+            </div>
+            <p style="color:#64748b;margin-top:16px;font-size:0.9em">精品模板/提示词包 ¥99-399 按套</p>
+        </div>
+    </div>
+</body>
+</html>

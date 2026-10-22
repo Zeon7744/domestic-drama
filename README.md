@@ -106,3 +106,34 @@ domestic-drama 是个人创作者的 AI 短剧工作流编排工具。行业现�
 
 > English: one-stop AI short-drama workflow for individual creators. Hit rate is just 0.47% industry-wide; this Agent pipeline + character-consistency engine targets 2%+. Pro from ¥79/mo, cheaper than Kling Pro with workflow orchestration on top.
 
+---
+
+## 🎬 爆款样片展示
+
+| 样片 | 时长 | 题材 | 核心卖点 |
+|------|------|------|----------|
+| 《战神归来》 | 90s×3集 | 都市异能 | 战神归来发现女儿被软禁，一个电话全城跪了 |
+| 《重生都市修仙》 | 120s×5集 | 玄幻重生 | 重生回2026年手握未来10年风口，逆袭商战 |
+| 《豪门契约婚》 | 90s×3集 | 甜宠豪门 | 她以为他讨厌她，直到他说"我找了你三年" |
+
+> 📺 打开 [`sample_showcase.html`](sample_showcase.html) 查看完整样片展示页（含 SVG 封面 + 一键生成入口）
+
+**一键生成同款**：
+```bash
+python drama_workflow.py --topic "战神归来" --episodes 3 --duration 90
+```
+
+---
+
+## 💎 定价方案
+
+| 计划 | 月费 | 集数限制 | 角色一致性引擎 | 发行分成 |
+|------|------|----------|---------------|----------|
+| **Free** | ¥0 | 1 集/天 | ❌ | — |
+| **Pro** 🔥 | ¥79/月 | 5 集/天 | ❌ | — |
+| **Studio** | ¥299/月 | 不限 | ✅ | 30% |
+
+**精品模板/提示词包**：¥99-399 按套
+
+> 发行分成：Studio 用户通过我们上架红果/抖音，平台收益分成 30%（含投流+分发）
+

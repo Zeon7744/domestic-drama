@@ -240,3 +240,36 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# ---------- 付费墙（Pro Gates） ----------
+
+PRO_GATES = {
+    "free":    {"max_episodes_per_day": 1, "character_engine": False, "distribution_share": 0.0,  "label": "免费版 ¥0"},
+    "pro":     {"max_episodes_per_day": 5, "character_engine": False, "distribution_share": 0.0,  "label": "Pro 版 ¥79/月"},
+    "studio":  {"max_episodes_per_day": 999,"character_engine": True,  "distribution_share": 0.30, "label": "Studio 版 ¥299/月"},
+}
+
+
+def check_gates(plan: str, episode_count: int) -> dict:
+    """检查付费墙：返回 {"allowed": bool, "reason": str, "upgrade_hint": str}。
+    plan: free/pro/studio
+    episode_count: 本次要生成的集数
+    """
+    gates = PRO_GATES.get(plan, PRO_GATES["free"])
+    limit = gates["max_episodes_per_day"]
+
+    if episode_count > limit:
+        return {
+            "allowed": False,
+            "reason": f"当前套餐({gates['label']})每日限 {limit} 集，请求 {episode_count} 集超限",
+            "upgrade_hint": "升级 Pro (¥79/月) 解锁 5 集/天，或 Studio (¥299/月) 不限集数 + 角色一致性引擎 + 发行分成",
+        }
+
+    return {
+        "allowed": True,
+        "remaining": limit - episode_count if limit < 999 else -1,
+        "character_engine": gates["character_engine"],
+        "distribution_share": gates["distribution_share"],
+        "reason": "",
+    }
