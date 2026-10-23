@@ -1,0 +1,152 @@
+[
+  {
+    "episode": 1,
+    "shots": [
+      {
+        "shot_no": 1,
+        "sec": 3,
+        "kind": "特写-钩子",
+        "beat": "开场钩子",
+        "description": "开场钩子镜头：直接给冲突画面+一句悬念台词（用 HOOK）。",
+        "dialogue": "战神归来，发现女儿被软禁，他一个电话，全城势力跪了。",
+        "emotion": "悬念"
+      },
+      {
+        "shot_no": 2,
+        "sec": 5,
+        "kind": "近景-世界观",
+        "beat": "世界观",
+        "description": "世界观镜头：用1-2句交代时间/地点/主角身份，不啰嗦。",
+        "dialogue": "",
+        "emotion": "悬念"
+      },
+      {
+        "shot_no": 3,
+        "sec": 10,
+        "kind": "中景-冲突",
+        "beat": "冲突升级",
+        "description": "冲突升级镜头：主角目标受阻，反派露出獠牙。",
+        "dialogue": "",
+        "emotion": "钩子"
+      },
+      {
+        "shot_no": 4,
+        "sec": 69,
+        "kind": "全景-高潮",
+        "beat": "高潮/反转",
+        "description": "高潮/反转镜头：主角亮出底牌或局势逆转，给爽点。",
+        "dialogue": "",
+        "emotion": "爽点"
+      },
+      {
+        "shot_no": 5,
+        "sec": 3,
+        "kind": "特写-付费钩子",
+        "beat": "付费点钩子",
+        "description": "付费点钩子镜头：\"他抬手，下一秒——\"，诱导付费解锁。",
+        "dialogue": "",
+        "emotion": "钩子"
+      }
+    ]
+  },
+  {
+    "episode": 2,
+    "shots": [
+      {
+        "shot_no": 1,
+        "sec": 3,
+        "kind": "特写-钩子",
+        "beat": "开场钩子",
+        "description": "开场钩子镜头：直接给冲突画面+一句悬念台词（用 HOOK）。",
+        "dialogue": "战神归来，发现女儿被软禁，他一个电话，全城势力跪了。",
+        "emotion": "悬念"
+      },
+      {
+        "shot_no": 2,
+        "sec": 5,
+        "kind": "近景-世界观",
+        "beat": "世界观",
+        "description": "世界观镜头：用1-2句交代时间/地点/主角身份，不啰嗦。",
+        "dialogue": "",
+        "emotion": "悬念"
+      },
+      {
+        "shot_no": 3,
+        "sec": 10,
+        "kind": "中景-冲突",
+        "beat": "冲突升级",
+        "description": "冲突升级镜头：主角目标受阻，反派露出獠牙。",
+        "dialogue": "",
+        "emotion": "钩子"
+      },
+      {
+        "shot_no": 4,
+        "sec": 69,
+        "kind": "全景-高潮",
+        "beat": "高潮/反转",
+        "description": "高潮/反转镜头：主角亮出底牌或局势逆转，给爽点。",
+        "dialogue": "",
+        "emotion": "爽点"
+      },
+      {
+        "shot_no": 5,
+        "sec": 3,
+        "kind": "特写-付费钩子",
+        "beat": "付费点钩子",
+        "description": "付费点钩子镜头：\"他抬手，下一秒——\"，诱导付费解锁。",
+        "dialogue": "",
+        "emotion": "钩子"
+      }
+    ]
+  },
+  {
+    "episode": 3,
+    "shots": [
+      {
+        "shot_no": 1,
+        "sec": 3,
+        "kind": "特写-钩子",
+        "beat": "开场钩子",
+        "description": "开场钩子镜头：直接给冲突画面+一句悬念台词（用 HOOK）。",
+        "dialogue": "战神归来，发现女儿被软禁，他一个电话，全城势力跪了。",
+        "emotion": "悬念"
+      },
+      {
+        "shot_no": 2,
+        "sec": 5,
+        "kind": "近景-世界观",
+        "beat": "世界观",
+        "description": "世界观镜头：用1-2句交代时间/地点/主角身份，不啰嗦。",
+        "dialogue": "",
+        "emotion": "悬念"
+      },
+      {
+        "shot_no": 3,
+        "sec": 10,
+        "kind": "中景-冲突",
+        "beat": "冲突升级",
+        "description": "冲突升级镜头：主角目标受阻，反派露出獠牙。",
+        "dialogue": "",
+        "emotion": "钩子"
+      },
+      {
+        "shot_no": 4,
+        "sec": 69,
+        "kind": "全景-高潮",
+        "beat": "高潮/反转",
+        "description": "高潮/反转镜头：主角亮出底牌或局势逆转，给爽点。",
+        "dialogue": "",
+        "emotion": "爽点"
+      },
+      {
+        "shot_no": 5,
+        "sec": 3,
+        "kind": "特写-付费钩子",
+        "beat": "付费点钩子",
+        "description": "付费点钩子镜头：\"他抬手，下一秒——\"，诱导付费解锁。",
+        "dialogue": "",
+        "emotion": "钩子"
+      }
+    ]
+  }
+]

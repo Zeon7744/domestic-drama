@@ -1,3 +1,8 @@
+import billing
+
+def gate_access(plan="free"):
+    """有偿授权门控：免费版限次，Pro 解锁（接 billing.check_access）"""
+    return billing.check_access(plan)
 """
 domestic-drama: 爆款短剧工作流（选题 → 脚本 → 分镜 → 成片 一键流水线）
 
