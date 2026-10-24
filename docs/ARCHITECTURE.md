@@ -10,7 +10,7 @@ run.sh / smoke_test.sh
   drama_engine.py     核心引擎：选题拆解 → 分镜 → 角色卡 → 台词 → BGM
         │  门控
         ▼
-  billing.py          爱发电 afdian 网关 + PAYWALL_RULES + check_access
+  billing.py          面包多 Pay mbd 网关 + PAYWALL_RULES + check_access
 ```
 
 ## 数据流
