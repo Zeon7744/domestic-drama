@@ -9,8 +9,10 @@ echo "输出目录: $OUT_DIR"
 
 mkdir -p "$OUT_DIR"
 
+cd "$(dirname "$0")"  # 始终在仓根目录执行，避免跨目录调用失败
+
 # 运行 demo 创意
-python3 drama_workflow.py --topic "战神归来" --episodes 3 --duration 90 --out "$OUT_DIR" 2>&1
+python3 ./drama_workflow.py --topic "战神归来" --episodes 3 --duration 90 --out "$OUT_DIR" 2>&1
 
 PASS=0; FAIL=0
 

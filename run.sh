@@ -1,21 +1,14 @@
 #!/usr/bin/env bash
-# run.sh — domestic-drama 一键启动
-# 用法：./run.sh "一句话创意" [--episodes N] [--duration N] [--platform douyin|kuaishou]
-set -euo pipefail
+# run.sh — domestic-drama 一键演示（爆款短剧 3 集流水线）
+set -uo pipefail
+cd "$(dirname "$0")"
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-cd "$SCRIPT_DIR"
+echo "🎬 domestic-drama 一键演示：选题 → 脚本 → 分镜 → 成片流水线"
+OUT="demo_out"
+rm -rf "$OUT"
 
-IDEA="${1:-重生都市修仙}"
-shift 2>/dev/null || true
+python3 drama_workflow.py --topic "战神归来" --episodes 3 --duration 90 --out "$OUT" 2>&1 | tail -8
 
-echo "🎬 爆款短剧工作流"
-echo "💡 创意: $IDEA"
-echo "📦 Checking dependencies..."
-pip install -r requirements.txt 2>/dev/null || pip3 install -r requirements.txt 2>/dev/null || echo "(zero deps needed)"
-
-echo "🚀 Generating..."
-python3 drama_workflow.py --topic "$IDEA" "$@"
-
-echo ""
-echo "✅ 完成！查看输出目录 out_* 获取完整文件"
+echo
+echo "✅ 输出目录：$(pwd)/$OUT"
+ls "$OUT"
