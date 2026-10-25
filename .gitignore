@@ -2,3 +2,4 @@ __pycache__/
 *.pyc
 publish/
 dist/
+praise_ledger.jsonl
